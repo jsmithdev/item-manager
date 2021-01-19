@@ -1,0 +1,98 @@
+<template>
+    <!-- 
+    <div class="slds-grid slds-gutters">
+
+        <div class="slds-col">
+            <lightning-combobox
+                label="Filter Products by Family"
+                name="Family"
+                onchange={filterItems}
+                options={filterFamilies}
+            ></lightning-combobox>
+        </div>
+    
+        <div class="slds-col">
+            <lightning-input
+                label="Filter Products by Text"
+                placeholder="Additionally filter on data cells, case insensitive..."
+                name="Any"
+                onchange={filterItems}
+            ></lightning-input>
+        </div>
+    </div> 
+    -->
+
+    <template if:true={loading}>
+        <lightning-spinner
+            variant="brand"
+            alternative-text="loading..."
+        ></lightning-spinner>
+    </template>
+
+    <template if:false={loading}>
+        
+        <div class="slds-grid slds-gutters">
+            <!-- <div class="slds-col">
+                <lightning-combobox
+                    label="Filter Product by Family"
+                    name="Family"
+                    onchange={filterItems}
+                    options={filterFamilies}
+                ></lightning-combobox>
+            </div> -->
+        
+            <div class="slds-col">
+                <lightning-input
+                    label="Filter Items by Text"
+                    placeholder="Additionally filter on any data cell, case insensitive..."
+                    name="Any"
+                    onchange={filterItems}
+                ></lightning-input>
+            </div>
+        </div>
+
+        <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleToggleSection}>
+            <template for:each={groups} for:item="group">
+    
+                <lightning-accordion-section name={group.value} label={group.label} key={group.key}>
+                    
+                    <!-- 
+                    <lightning-button-menu slot="actions"
+                        alternative-text="Show menu"
+                        icon-size="x-small"
+                        menu-alignment="right">
+                        <lightning-menu-item value="New" label="Menu Item One"></lightning-menu-item>
+                        <lightning-menu-item value="Edit" label="Menu Item Two"></lightning-menu-item>
+                    </lightning-button-menu>
+                    -->
+                    <lightning-button-group slot="actions">
+                        <lightning-button
+                            name={group.value}
+                            label="Add Selected"
+                            icon-name="utility:add"
+                            icon-position="left"
+                            onclick={addSelected}>
+                    </lightning-button>
+                    </lightning-button-group>
+                    
+    
+                    <lightning-datatable
+                        suppress-bottom-bar	 
+                        class={group.value}
+                        key-field="Id"
+                        columns={columns}
+                        data={group.records}
+                        onrowaction={rowAction}
+                        sorted-by={sortedBy}
+                        default-sort-direction={sortedDirection}
+                        sorted-direction={sortedDirection}>
+                    </lightning-datatable>
+    
+                </lightning-accordion-section>
+            
+            </template>
+        </lightning-accordion>
+    </template>
+<!-- 
+    <button onclick={debug}>debug</button> -->
+</template>

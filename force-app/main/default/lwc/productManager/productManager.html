@@ -1,0 +1,74 @@
+<template>
+
+    <lightning-card
+        title={header}
+        icon-name={iconName}>
+
+        <div slot="actions">
+            <lightning-button label="Refresh" onclick={refreshExistingFiles}></lightning-button>
+        </div>
+
+        <div style="padding: 1rem;">
+
+            <!-- <div class="slds-grid slds-gutters">
+
+                <div class="slds-col">
+                    <lightning-combobox
+                        label="Filter Items by Family"
+                        name="Family"
+                        onchange={filterItems}
+                        options={filterFamilies}
+                    ></lightning-combobox>
+                </div>
+            
+                <div class="slds-col">
+                    <lightning-input
+                        label="Filter Items by Text"
+                        placeholder="Additionally filter on any data cell, case insensitive..."
+                        name="Any"
+                        onchange={filterItems}
+                    ></lightning-input>
+                </div>
+            </div> -->
+
+            <br />
+            
+            <c-extenda-table
+                key-field="Id"
+                columns={columns}
+                data={viewable_files}
+                sorted-by={sortedBy}
+                is-loading={loading}
+                default-sort-direction={sortedDirection}
+                sorted-direction={sortedDirection}
+                hide-checkbox-column="true"
+                onpicklist={updateFamily}
+                onsort={updateColumnSorting}
+                onsave={handleSave}
+                onrowaction={managerChanged}>
+            </c-extenda-table>
+        </div>
+    </lightning-card>
+    <br/>
+    <lightning-card
+        title="Add Products"
+        icon-name="action:add_relationship">
+            
+        <div style="padding: 1rem;">
+
+            <template if:true={families.length}>
+                <c-products
+                    families={families}
+                    onselected={selected}
+                ></c-products>
+            </template>
+        </div>
+
+        <span slot="footer">
+            <template if:true={showDebug}>
+                <lightning-button label="Debug" onclick={debug}></lightning-button>
+            </template>
+        </span>
+    </lightning-card>
+
+</template>

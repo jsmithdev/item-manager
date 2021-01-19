@@ -1,0 +1,11 @@
+
+.container {
+    width:100%;
+    min-height: 500px;
+    border-radius: 5px;
+    border: 1pt solid #CCC;
+}
+
+.slds-scrollable_y {
+    min-height: 8rem;
+}
